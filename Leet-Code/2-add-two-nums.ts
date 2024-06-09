@@ -31,25 +31,82 @@ class ListNode {
   }
 }
 
+// Code 1: Using loop
 function addTwoNumbers(
   l1: ListNode | null,
   l2: ListNode | null
 ): ListNode | null {
-  let sum = new ListNode();
-  let carry: number;
+  let sum: ListNode = null;
+  let nextPointer = sum;
+  let carry = 0;
 
-  while (l1.next !== null && l2.next !== null) {
-    let nextSumNode = new ListNode();
-    carry = Math.floor((l1.val + l2.val) / 10);
-    sum.val = (l1.val + l2.val) % 10;
-    sum.next = new ListNode();
+  while (l1 !== null || l2 !== null || carry != 0) {
+    let sumDigit = carry;
+
+    if (l1 !== null) {
+      sumDigit += l1.val;
+      l1 = l1.next;
+    }
+
+    if (l2 !== null) {
+      sumDigit += l2.val;
+      l2 = l2.next;
+    }
+
+    carry = Math.floor(sumDigit / 10);
+    sumDigit %= 10;
+
+    if (nextPointer !== null) {
+      nextPointer.next = new ListNode(sumDigit, null);
+      nextPointer = nextPointer.next;
+    } else {
+      sum = new ListNode(sumDigit, null);
+      nextPointer = sum;
+    }
   }
 
   return sum;
 }
 
+// Code 2: Using Recursion
+function addWithCarry(l1: ListNode | null, l2: ListNode | null, carry: number) {
+  if (l1 === null && l2 === null && carry === 0) {
+    return null;
+  }
+  let sumDigit = carry;
+
+  if (l1 !== null) {
+    sumDigit += l1.val;
+    l1 = l1.next;
+  }
+
+  if (l2 !== null) {
+    sumDigit += l2.val;
+    l2 = l2.next;
+  }
+
+  carry = Math.floor(sumDigit / 10);
+  sumDigit %= 10;
+
+  return new ListNode(sumDigit, addWithCarry(l1, l2, carry));
+}
+
+function addTwoNumbersRecursion(
+  l1: ListNode | null,
+  l2: ListNode | null
+): ListNode | null {
+  return addWithCarry(l1, l2, 0);
+}
+
 console.log(
   addTwoNumbers(
+    new ListNode(2, new ListNode(4, new ListNode(3, null))),
+    new ListNode(5, new ListNode(6, new ListNode(4, null)))
+  )
+);
+
+console.log(
+  addTwoNumbersRecursion(
     new ListNode(2, new ListNode(4, new ListNode(3, null))),
     new ListNode(5, new ListNode(6, new ListNode(4, null)))
   )
