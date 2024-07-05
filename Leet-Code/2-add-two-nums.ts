@@ -22,15 +22,6 @@ Output: [8,9,9,9,0,0,0,1]
 
  */
 
-class ListNode {
-  val: number;
-  next: ListNode | null;
-  constructor(val?: number, next?: ListNode | null) {
-    this.val = val === undefined ? 0 : val;
-    this.next = next === undefined ? null : next;
-  }
-}
-
 // Code 1: Using loop
 function addTwoNumbers(
   l1: ListNode | null,
