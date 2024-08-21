@@ -24,4 +24,17 @@ Explanation: 1 and -1 are both the closest numbers to 0, so 1 being larger is re
 
 function findClosestNumber(nums: number[]): number {
   let obj = {};
+  for (const num of nums) {
+    num in obj
+      ? obj[Math.abs(num - 0)].push(num)
+      : (obj[Math.abs(num - 0)] = [num]);
+  }
+  let lD = Object.keys(obj).sort((a, b) => parseInt(a) - parseInt(b))[0];
+  if (obj[lD].length === 1) {
+    return obj[lD][0];
+  } else {
+    return Math.max(...obj[lD]);
+  }
 }
+
+console.log(findClosestNumber([2, -1, 1]));
