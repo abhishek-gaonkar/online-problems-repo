@@ -35,7 +35,7 @@ function mergeAlternately(word1: string, word2: string): string {
   let word1CharArr = word1.split("");
   let word2CharArr = word2.split("");
   let finalArr = [];
-  while (word1CharArr.length !== 0 && word2CharArr.length !== 0) {
+  while (word1CharArr.length !== 0 || word2CharArr.length !== 0) {
     if (word1CharArr.length === 0) {
       finalArr.push(...word2CharArr);
       word2CharArr.length = 0;
@@ -49,4 +49,4 @@ function mergeAlternately(word1: string, word2: string): string {
   return finalArr.join("");
 }
 
-console.log(mergeAlternately("abcd", "pq"));
+console.log(mergeAlternately("ab", "pqrs"));
